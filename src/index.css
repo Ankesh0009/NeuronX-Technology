@@ -1,0 +1,319 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+/* ======================================================
+   BASE
+====================================================== */
+body {
+  font-family: "Inter", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Material Icons */
+.material-symbols-outlined {
+  font-variation-settings:
+    "FILL" 0,
+    "wght" 400,
+    "GRAD" 0,
+    "opsz" 24;
+}
+
+/* ======================================================
+   NAVIGATION
+====================================================== */
+.nav-link {
+  position: relative;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151; /* gray-700 */
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 100%;
+  height: 2px;
+  background-color: #3b82f6;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.25s ease;
+}
+
+.nav-link:hover {
+  color: #3b82f6;
+  transform: translateY(-1px);
+}
+
+.nav-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Dark mode nav */
+.dark .nav-link {
+  color: #d1d5db;
+}
+
+.dark .nav-link:hover {
+  color: #3b82f6;
+}
+
+.dark .nav-link::after {
+  background-color: #3b82f6;
+}
+
+/* Mobile links */
+.mobile-link {
+  display: block;
+  padding: 0.6rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 0.5rem;
+  color: #1f2937;
+  transition: background 0.2s ease;
+}
+
+.mobile-link:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* ======================================================
+   REFFTO-STYLE REVEAL ANIMATIONS
+====================================================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 700ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 700ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 120ms; }
+.reveal-delay-2 { transition-delay: 240ms; }
+.reveal-delay-3 { transition-delay: 360ms; }
+
+/* ======================================================
+   VISUAL GRID (HERO RIGHT)
+====================================================== */
+#visual-grid {
+  width: 100%;
+  max-width: 480px;
+  aspect-ratio: 1 / 1;
+}
+
+/* Individual image tiles */
+.visual-tile {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: pointer;
+  background: #000;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.visual-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.visual-tile:hover {
+  transform: translateY(-6px) scale(1.04);
+  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.25);
+}
+
+
+.visual-tile:hover img {
+  transform: scale(1.08);
+}
+
+.visual-tile:active {
+  transform: scale(0.96);
+}
+
+/* ======================================================
+   PRODUCT REVEAL OVERLAY (INLINE, NOT MODAL)
+====================================================== */
+#product-reveal {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#product-reveal.hidden {
+  display: none;
+}
+
+#product-reveal > div {
+  animation: scaleIn 0.35s ease-out forwards;
+}
+
+/* Reveal animation */
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ======================================================
+   CTA MICRO POLISH
+====================================================== */
+.hover-lift {
+  transition: transform 300ms ease, box-shadow 300ms ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* ======================================================
+   TRUSTED MARQUEE (LOGO POLISH)
+====================================================== */
+.trusted-logo {
+  opacity: 0.6;
+  filter: grayscale(100%);
+  transition: all 0.4s ease;
+}
+
+.trusted-logo:hover {
+  opacity: 1;
+  filter: grayscale(0%);
+}
+
+/* ======================================================
+   MISC
+====================================================== */
+::selection {
+  background: rgba(59, 130, 246, 0.3);
+  color: #111827;
+}
+.trusted-swiper .swiper-wrapper {
+  transition-timing-function: linear !important;
+}
+
+/* Default (inactive) */
+.timeline-dot {
+  background-color: #d1d5db; /* gray-300 */
+  transition: background-color 0.4s ease, transform 0.4s ease;
+}
+
+.timeline-label {
+  color: #6b7280; /* gray-500 */
+  transition: color 0.3s ease;
+}
+
+/* Active step */
+.timeline-step.is-active .timeline-dot {
+  background-color: #3b82f6; /* PRIMARY BLUE */
+  transform: scale(1.1);
+}
+
+.timeline-step.is-active .timeline-label {
+  color: #3b82f6;
+}
+
+/* ================= FOOTER INTERACTIONS ================= */
+
+/* Footer links */
+.footer-link {
+  position: relative;
+  font-size: 0.875rem;
+  color: #4b5563;
+  transition: color 0.2s ease;
+}
+
+.footer-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 1px;
+  background: #3b82f6;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.25s ease;
+}
+
+.footer-link:hover {
+  color: #111827;
+}
+
+.footer-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Email hover pulse */
+footer a[href^="mailto"] {
+  position: relative;
+}
+
+footer a[href^="mailto"]::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 8px;
+  background: rgba(59, 130, 246, 0.08);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+footer a[href^="mailto"]:hover::after {
+  opacity: 1;
+}
+
+/* Bottom bar divider animation */
+footer .border-t {
+  position: relative;
+}
+
+footer .border-t::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  height: 1px;
+  width: 0%;
+  background: linear-gradient(to right, #3b82f6, transparent);
+  transition: width 0.6s ease;
+}
+
+footer:hover .border-t::before {
+  width: 100%;
+}
+
+@keyframes dotsMove {
+  from {
+      background-position: 0 0;
+  }
+
+  to {
+      background-position: 240px 240px;
+  }
+}
