@@ -1,9 +1,9 @@
 export const projectsData = [
     {
         id: 1,
-        name: "E-Commerce Replatform",
+        name: "Inspire Leap - EdTech Company",
         image: "https://images.unsplash.com/photo-1604922824961-87cefb2e4b07?w=800",
-        link: "https://example.com/project-1"
+        link: "https://www.inspireleap.org/"
     },
     {
         id: 2,
