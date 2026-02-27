@@ -3,10 +3,12 @@ import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import 'swiper/css';
+import { projectsData } from '../data/projects';
+import ProjectModal from '../components/ProjectModal';
 
 export default function Home() {
-    const [revealImage, setRevealImage] = useState('');
-    const [isRevealOpen, setIsRevealOpen] = useState(false);
+    const [selectedProject, setSelectedProject] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         // REVEAL ANIMATION
@@ -64,9 +66,13 @@ export default function Home() {
         };
     }, []);
 
-    const openReveal = (img) => {
-        setRevealImage(img);
-        setIsRevealOpen(true);
+    const openModal = (project) => {
+        setSelectedProject(project);
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
     };
 
     return (
@@ -132,44 +138,37 @@ export default function Home() {
 
                                 {/* GRID */}
                                 <div id="visual-grid" className="grid grid-cols-3 grid-rows-3 gap-5 aspect-square">
-                                    {[
-                                        "https://images.unsplash.com/photo-1604922824961-87cefb2e4b07?w=800",
-                                        "https://images.unsplash.com/photo-1553181001-f9cf6c45afca?w=800",
-                                        "https://plus.unsplash.com/premium_photo-1664297869562-099dmd?w=800",
-                                        "https://images.unsplash.com/photo-1584005679717-7dda5e88bb52?w=800",
-                                        "https://images.unsplash.com/photo-1599385549907-a8a47fb6e402?w=800",
-                                        "https://images.unsplash.com/photo-1638140481609-ec648a2edbea?w=800",
-                                        "https://images.unsplash.com/photo-1604922824961-87cefb2e4b07?w=800",
-                                        "https://images.unsplash.com/photo-1553181001-f9cf6c45afca?w=800",
-                                        "https://plus.unsplash.com/premium_photo-1664297869562-099dmd?w=800"
-                                    ].map((src, i) => (
-                                        <button key={i} className="visual-tile" onClick={() => openReveal(src)}>
-                                            <img src={src} className="w-full h-full object-cover rounded-lg" alt="" />
+                                    {projectsData.map((project) => (
+                                        <button
+                                            key={project.id}
+                                            className="group relative overflow-hidden rounded-lg transition-all duration-300 hover:scale-105 shadow-sm hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                                            onClick={() => openModal(project)}
+                                            aria-label={`View project details for ${project.name}`}
+                                        >
+                                            <img
+                                                src={project.image}
+                                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                                alt={project.name}
+                                                loading="lazy"
+                                            />
+                                            {/* Hover Overlay */}
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-3">
+                                                <span className="text-white text-xs font-bold truncate opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300 delay-100">
+                                                    {project.name}
+                                                </span>
+                                            </div>
                                         </button>
                                     ))}
                                 </div>
-
-                                {/* PRODUCT REVEAL */}
-                                {isRevealOpen && (
-                                    <div id="product-reveal" className="absolute inset-0 z-20 flex items-center justify-center">
-                                        <div className="relative w-[85%] aspect-square bg-black rounded-2xl shadow-2xl overflow-hidden animate-[scaleIn_0.35s_ease-out]">
-
-                                            <img id="reveal-image" src={revealImage} alt="Product preview" className="absolute inset-0 w-full h-full object-cover" />
-
-                                            <div className="absolute top-0 right-0 h-20 w-20 bg-primary rounded-bl-full"></div>
-
-                                            <div className="absolute bottom-4 left-4 text-white text-base font-bold">
-                                                The Product
-                                            </div>
-
-                                            <button id="reveal-close" onClick={() => setIsRevealOpen(false)} className="absolute top-3 left-3 h-8 w-8 rounded-full bg-black/70 text-white flex items-center justify-center hover:bg-black transition" aria-label="Close">
-                                                ✕
-                                            </button>
-                                        </div>
-                                    </div>
-                                )}
                             </div>
                         </div>
+
+                        {/* PRODUCT MODAL */}
+                        <ProjectModal
+                            isOpen={isModalOpen}
+                            onClose={closeModal}
+                            project={selectedProject}
+                        />
 
                         {/* ================= TRUSTED BY ================= */}
                         <div className=" border-t border-gray-100 lg:col-span-12 w-full mt-10 reveal">
